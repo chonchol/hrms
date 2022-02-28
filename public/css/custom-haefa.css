@@ -8,3 +8,19 @@
     font-weight: bold;
     color: rgb(11, 72, 138);
 }
+.leave-info{
+    text-align: center;
+    background-color: #ddd;
+}
+.leave-info p{
+    margin: 0;
+    color: red;
+}
+.bank-details{
+    border: 2px solid #8A39E1;
+    padding: 10px;
+    border-radius: 5px;
+}
+.card-header h5{
+    margin-bottom: 0;
+}

@@ -33,10 +33,9 @@
             rel="stylesheet"
         />
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}"
-    />
-    <link rel="stylesheet" href="{{ asset('/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}"
-    />
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/buttons.dataTables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}"/>
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/custom-haefa.css') }}">

@@ -32,14 +32,18 @@
     <div class="container-fluid">
         @include('messages.alerts')
         <div class="row">
+            <div class="col-md-12">
+                <div style="float:right; margin-bottom: 5px;">
+                    <a href="{{ route('admin.employees.create') }}"><button class="btn btn-info btn-sm"> Add Employee</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12 mx-auto">
                 <div class="card card-primary">
                     <div class="card-header">
                         <div class="card-title text-center">
                             Employees
-                        </div>
-                        <div class="text-center" style="float:right">
-                            <a href="{{ route('admin.employees.create') }}">Add Employee</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -68,11 +72,7 @@
                                     <td>
                                         <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-xs btn-info">View Profile</a>
                                         <a href="#" class="btn btn-xs btn-warning">Edit</a>
-                                        <button 
-                                        class="btn btn-xs btn-danger"
-                                        data-toggle="modal" 
-                                        data-target="#deleteModalCenter{{ $index + 1 }}"
-                                        >Delete</button>
+                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModalCenter{{ $index + 1 }}">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -131,7 +131,15 @@
         $('#dataTable').DataTable({
             responsive:true,
             autoWidth: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'print'
+            ]
         });
     });
 </script>
+<script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.print.min.js') }}"></script>
 @endsection

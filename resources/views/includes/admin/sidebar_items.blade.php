@@ -132,7 +132,7 @@
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Management Notice</p>
+                <p>Office Order</p>
             </a>
         </li>
     </ul>

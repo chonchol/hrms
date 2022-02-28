@@ -71,11 +71,11 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Designation</th>
                                     <th>Entry Time</th>
                                     <th class="none">Entry Address</th>
                                     <th>Exit Time</th>
                                     <th class="none">Exit Address</th>
-                                    <th>Designation</th>
                                     <th>Working Hours</th>
                                     <th>Status</th>
                                     <th class="none">Actions</th>
@@ -85,43 +85,52 @@
                                 @foreach ($employees as $index => $employee)
                                 <tr>
                                     <td>{{ $employee->first_name.' '.$employee->last_name }}</td>
+                                    <td>{{ $employee->desg }}</td>
                                     @if($employee->attendanceToday)
-                                        <td><h6 class="text-center"><span class="badge badge-pill badge-success"> {{ $employee->attendanceToday->created_at->format('H:i:s') }}</span></h6></td>
+                                        <?php
+                                            $timediffence = strtotime($employee->attendanceToday->exit_time)-strtotime($employee->attendanceToday->entry_time);
+                                            $hours = (int)($timediffence/60/60);
+                                            $minutes = (int)($timediffence/60)-$hours*60;
+                                            $seconds = (int)$timediffence-$hours*60*60-$minutes*60;
+                                        ?>
+
+                                        <td> {{ date('H:i:s', strtotime($employee->attendanceToday->entry_time)) }} </td>
                                         <td>
                                             {{ $employee->attendanceToday->entry_location}} with IP {{ $employee->attendanceToday->entry_ip}}
                                         </td>
                                         @if ($employee->attendanceToday->exit_ip)
-                                            <td><h6 class="text-center"><span class="badge badge-pill badge-success">{{ $employee->attendanceToday->updated_at->format('H:i:s') }}</span></h6></td>
+                                            <td>{{ date('H:i:s', strtotime($employee->attendanceToday->exit_time)) }}</td>
                                             <td>
                                                {{ $employee->attendanceToday->exit_location}} with IP {{ $employee->attendanceToday->exit_ip}}
                                             </td>
                                         @else
-                                            <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
-                                            <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
+                                            <td>-</td>
+                                            <td>-</td>
                                         @endif
                                     @else
-                                        <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
-                                        <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
-                                        <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
-                                        <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
                                     @endif
-                                    <td>{{ $employee->desg }}</td>
-
+                                    
                                     <td>
                                     @if($employee->attendanceToday)    
-                                    <h6 class="text-center">3 hours</h6>
+                                    <?php echo $hours. ":" .$minutes. ":" .$seconds; ?>
                                     @else
-                                        <h6 class="text-center"><span class="badge badge-pill badge-danger">Undefined</span></h6>
+                                        -
                                     @endif
                                     </td>
-                                    <td><h6 class="text-center"><span class="badge badge-pill badge-warning">Late</span></h6></td>
+                                    <td class="text-center">
+                                    @if(isset($employee->attendanceToday->entry_time)) 
+                                        <span class="badge badge-pill badge-success">Present</span>
+                                    @else
+                                        <span class="badge badge-pill badge-danger">Absent</span>
+                                    @endif
+                                    </span></h6></td>
                                     <td>
                                         @if($employee->attendanceToday)
-                                        <button 
-                                        class="btn btn-xs btn-danger"
-                                        data-toggle="modal"
-                                        data-target="#deleteModalCenter{{ $employee->attendanceToday->id }}"
-                                        >Delete Record</button>
+                                        <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModalCenter{{ $employee->attendanceToday->id }}">Delete Record</button>
                                         @else 
                                         No actions available
                                         @endif
@@ -144,10 +153,7 @@
                                                     
                                                     <button type="button" class="btn flat btn-secondary" data-dismiss="modal">No</button>
                                                     
-                                                    <form 
-                                                    action="{{ route('admin.employees.attendance.delete', $employees->get($i-1)->attendanceToday->id) }}"
-                                                    method="POST"
-                                                    >
+                                                    <form action="{{ route('admin.employees.attendance.delete', $employees->get($i-1)->attendanceToday->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                         <button type="submit" class="btn flat btn-danger ml-1">Yes</button>
@@ -188,6 +194,10 @@
         $('#dataTable').DataTable({
             responsive:true,
             autoWidth: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'print'
+            ]
         });
         $('#date').daterangepicker({
             "singleDatePicker": true,
@@ -198,4 +208,8 @@
         });
     });
 </script>
+<script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.print.min.js') }}"></script>
 @endsection

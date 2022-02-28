@@ -54,35 +54,20 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="entry_time">Entry Time</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            name="entry_time"
-                                            id="entry_time"
-                                            placeholder="--:--:--"
-                                            disabled
-                                            />
+                                            <input type="text" class="form-control text-center" name="entry_time" id="entry_time" placeholder="--:--:--" disabled/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="entry_location">Entry Location</label>
                                             <input type="text" class="form-control text-center" id="entry_loc" placeholder="Locaton Loading..." disabled/>
-                                            <input type="text" name="entry_location" name="entry_location"
-                                            id="entry_location" hidden>
+                                            <input type="text" name="entry_location" name="entry_location" id="entry_location" hidden>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="entry_ip">Entry IP Address</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            id="entry_ip"
-                                            name="entry_ip"
-                                            placeholder="X.X.X.X"
-                                            disabled
-                                            />
+                                            <input type="text" class="form-control text-center" id="entry_ip" name="entry_ip" placeholder="X.X.X.X" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -91,45 +76,19 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="entry_time">Entry Time</label>
-                                            <input
-                                            type="text"
-                                            value="{{ $attendance->created_at->format('d-m-Y,  H:i:s') }}"
-                                            class="form-control text-center"
-                                            name="entry_time"
-                                            id="entry_time"
-                                            placeholder="--:--:--"
-                                            disabled
-                                            style="background: #333; color:#f4f4f4"
-                                            />
+                                            <input type="text" value="{{ date('d-m-Y,  H:i:s', strtotime($attendance->entry_time)) }}" class="form-control text-center" name="entry_time" id="entry_time" placeholder="--:--:--" disabled style="background: #333; color:#f4f4f4" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="entry_location">Entry Location</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            name="entry_location"
-                                            value="{{ $attendance->entry_location }}"
-                                            placeholder="..."
-                                            disabled
-                                            style="background: #333; color:#f4f4f4"
-                                            />
+                                            <input type="text" class="form-control text-center" name="entry_location" value="{{ $attendance->entry_location }}" placeholder="..." disabled style="background: #333; color:#f4f4f4"/>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="entry_ip">Entry IP Address</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            id="entry_ip"
-                                            value="{{ $attendance->entry_ip }}"
-                                            name="entry_ip"
-                                            placeholder="X.X.X.X"
-                                            disabled
-                                            style="background: #333; color:#f4f4f4"
-                                            />
+                                            <input type="text" class="form-control text-center" id="entry_ip" value="{{ $attendance->entry_ip }}" name="entry_ip" placeholder="X.X.X.X" disabled style="background: #333; color:#f4f4f4" />
                                         </div>
                                     </div>
                                 </div>
@@ -139,23 +98,13 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exit_time">Exit Time</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            name="exit_time"
-                                            id="exit_time"
-                                            placeholder="--:--:--"
-                                            disabled
-                                            />
+                                            <input type="text" class="form-control text-center" name="exit_time" id="exit_time" placeholder="--:--:--" disabled/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exit_location">Exit Location</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            id="exit_loc"
+                                            <input type="text" class="form-control text-center" id="exit_loc"
                                             @if ($attendance)
                                             placeholder="Loading location..."
                                                 
@@ -163,23 +112,14 @@
                                             placeholder="..."
                                                 
                                             @endif
-                                            disabled
-                                            />
-                                            <input type="text" name="exit_location"
-                                            id="exit_location" hidden>
+                                            disabled/>
+                                            <input type="text" name="exit_location" id="exit_location" hidden>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exit_ip">Exit IP Address</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            id="exit_ip"
-                                            name="exit_ip"
-                                            placeholder="X.X.X.X"
-                                            disabled
-                                            />
+                                            <input type="text" class="form-control text-center" id="exit_ip" name="exit_ip" placeholder="X.X.X.X" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -188,45 +128,19 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exit_time">Exit Time</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            name="exit_time"
-                                            id="exit_time"
-                                            value="{{ $attendance->updated_at->format('d-m-Y,  H:i:s') }}"
-                                            placeholder="--:--:--"
-                                            disabled
-                                            style="background: #333; color:#f4f4f4"
-                                            />
+                                            <input type="text" class="form-control text-center" name="exit_time" id="exit_time" value="{{ date('d-m-Y,  H:i:s', strtotime($attendance->exit_time)) }}" placeholder="--:--:--" disabled style="background: #333; color:#f4f4f4" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exit_location">Exit Location</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            name="exit_location"
-                                            value="{{ $attendance->exit_location }}"
-                                            placeholder="..."
-                                            disabled
-                                            style="background: #333; color:#f4f4f4"
-                                            />
+                                            <input type="text" class="form-control text-center" name="exit_location" value="{{ $attendance->exit_location }}" placeholder="..." disabled style="background: #333; color:#f4f4f4" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exit_ip">Exit IP Address</label>
-                                            <input
-                                            type="text"
-                                            class="form-control text-center"
-                                            id="exit_ip"
-                                            name="exit_ip"
-                                            value="{{ $attendance->exit_ip }}"
-                                            placeholder="X.X.X.X"
-                                            disabled
-                                            style="background: #333; color:#f4f4f4"
-                                            />
+                                            <input type="text" class="form-control text-center" id="exit_ip" name="exit_ip" value="{{ $attendance->exit_ip }}" placeholder="X.X.X.X" disabled style="background: #333; color:#f4f4f4"/>
                                         </div>
                                     </div>
                                 </div>

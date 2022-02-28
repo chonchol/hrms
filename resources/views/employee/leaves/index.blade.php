@@ -45,9 +45,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Applied on</th>
-                                        <th>Reason</th>
+                                        <th>Leave Type</th>
                                         <th>Status</th>
-                                        <th>Half Day</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
                                         <th class="none">Description</th>
@@ -59,7 +58,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $leave->created_at->format('d-m-Y') }}</td>
-                                        <td>{{ $leave->reason }}</td>
+                                        <td>{{ $leave->leave_type }}</td>
                                         <td>
                                             <h5>
                                                 <span 
@@ -75,7 +74,6 @@
                                                 </span> 
                                             </h5>
                                         </td>
-                                        <td>{{ ucfirst($leave->half_day) }}</td>
                                         <td>{{ $leave->start_date->format('d-m-Y')}}</td>
                                         @if($leave->end_date) 
                                         <td>{{ $leave->end_date->format('d-m-Y') }}</td>
@@ -84,7 +82,11 @@
                                         @endif
                                         <td>{{ $leave->description }}</td>
                                         <td>
+                                        @if ($leave->status == 'pending')
                                             <a href="{{ route('employee.leaves.edit', $leave->id) }}" class="btn btn-xs btn-warning">Edit</a>
+                                        @else
+                                        <p>No Permission</p>
+                                        @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -121,6 +123,10 @@ $(document).ready(function(){
             { responsivePriority: 1, targets: 0 },
             { responsivePriority: 2, targets: 1 },
             { responsivePriority: 200000000000, targets: -1 }
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'excel', 'print'
         ]
     });
     $('[data-toggle="tooltip"]').tooltip({
@@ -128,4 +134,8 @@ $(document).ready(function(){
     });
 });
 </script>
+<script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.print.min.js') }}"></script>
 @endsection

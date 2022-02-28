@@ -30,7 +30,7 @@ class AttendanceController extends Controller
         
         $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat='.$request->lat.'&lon='.$request->lon);
         // dd();
-        $result = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $request->lat . ',' . $request->lon . '&key=AIzaSyC_spXZlR87VF9qq073nAhFGZ-f3K6enqk';
+        // $result = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $request->lat . ',' . $request->lon . '&key=AIzaSyC_spXZlR87VF9qq073nAhFGZ-f3K6enqk';
         // $file_contents = file_get_contents($result);
 
         // $json_decode = json_decode($file_contents);
@@ -54,7 +54,7 @@ class AttendanceController extends Controller
         ];
         $last_attendance = $employee->attendance->last();
         if($last_attendance) {
-            if($last_attendance->created_at->format('d') == Carbon::now()->format('d')){
+            if(date('d', strtotime($last_attendance->entry_time)) == Carbon::now()->format('d')){
                 $data['attendance'] = $last_attendance;
                 if($last_attendance->registered)
                     $data['registered_attendance'] = 'yes';
@@ -68,6 +68,7 @@ class AttendanceController extends Controller
         $attendance = new Attendance([
                 'employee_id' => $employee_id,
                 'entry_ip' => $request->ip(),
+                'entry_time' => Carbon::now(),
                 'entry_location' => $request->entry_location
         ]);
         $attendance->save();
@@ -79,6 +80,7 @@ class AttendanceController extends Controller
     public function update(Request $request, $attendance_id) {
         $attendance = Attendance::findOrFail($attendance_id);
         $attendance->exit_ip = $request->ip();
+        $attendance->exit_time = Carbon::now();
         $attendance->exit_location = $request->exit_location;
         $attendance->registered = 'yes';
         $attendance->save();
@@ -142,6 +144,7 @@ class AttendanceController extends Controller
             'attendances' => $attendances,
             'filter' => $filter
         ];
+        // dd($attendances);
         return view('employee.attendance.index')->with($data);
     }
 
@@ -217,8 +220,8 @@ class AttendanceController extends Controller
         $attendance->created_at = $start;
         if($this->checkHoliday($holidays, $start)) {
             $attendance->registered = 'holiday';
-        } elseif($start->dayOfWeek == 0) {
-            $attendance->registered = 'sun';
+        } elseif($start->dayOfWeek == 5) {
+            $attendance->registered = 'fri';
         } elseif($this->checkLeave($leaves, $start)) {
             $attendance->registered = 'leave';
         } else {

@@ -32,6 +32,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    <div style="float:right; margin-bottom: 5px;">
+                        <a href="{{ route('admin.projects.create') }}"><button class="btn btn-info btn-sm"> Add Projects</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <!-- general form elements -->
                     @include('messages.alerts')
                     <div class="card card-primary">

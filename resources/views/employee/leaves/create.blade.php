@@ -39,21 +39,37 @@
                                 Apply For Leave
                             </h3>
                         </div>
+                        <div class="leave-info card-body">
+                            <p>*You can take miximum <b>10 days</b> Casual Leave and <b>5 days</b> Sick Leave in a Year</p> 
+                        </div>
+
                         @include('messages.alerts')
                         <form action="{{ route('employee.leaves.store', $employee->id) }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="">Reason</label>
-                                    <input type="text" name="reason" value="{{ old('reason') }}" class="form-control">
-                                    @error('reason')
-                                    <div class="text-danger">
-                                        {{ $message }}
+                                        <label for="">Leave Type<span style="color:red">*</span></label>
+                                        <select name="leave_type" class="form-control">
+                                            <option hidden disabled selected value> -- select an option -- </option>
+                                            @foreach ($leave_type as $type)
+                                                <option value="{{ $type }}"
+                                                @if (old('type') == $type)
+                                                    selected
+                                                @endif
+                                                >
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('type')
+                                        <div class="text-danger">
+                                            Please select an valid option
+                                        </div>
+                                        @enderror
                                     </div>
-                                    @enderror
-                                </div>
+
                                 <div class="form-group">
-                                    <label for="">Description</label>
+                                    <label for="">Reason</label>
                                     <textarea name="description" class="form-control" >{{ old('description') }}</textarea>
                                     @error('description')
                                     <div class="text-danger">
@@ -61,20 +77,20 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>Multiple Days</label>
                                     <select class="form-control" name="multiple-days" onchange="showDate()">
                                         <option value="yes" selected>Yes</option>
                                         <option value="no">No</option>
                                     </select>
-                                </div>
-                                <div class="form-group hide-input" id="half-day">
+                                </div> -->
+                                <!-- <div class="form-group hide-input" id="half-day">
                                     <label>Half Day</label>
                                     <select class="form-control" name="half-day">
                                         <option value="no">No</option>
                                         <option value="yes">Yes</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="form-group" id="range-group">
                                     <label for="">Date Range: </label>
                                     <input type="text" name="date_range" id="date_range" class="form-control">
@@ -84,10 +100,10 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="form-group hide-input" id="date-group">
+                                <!-- <div class="form-group hide-input" id="date-group">
                                     <label for="">Select Date </label>
                                     <input type="text" name="date" id="date" class="form-control">
-                                </div>
+                                </div> -->
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-primary" type="submit">Submit</button>
@@ -112,18 +128,18 @@
                 "format": "DD-MM-YYYY",
             }
         });
-        $('#date').daterangepicker({
-            "singleDatePicker": true,
-            "locale": {
-                "format": "DD-MM-YYYY",
-            }
-        });
+        // $('#date').daterangepicker({
+        //     "singleDatePicker": true,
+        //     "locale": {
+        //         "format": "DD-MM-YYYY",
+        //     }
+        // });
 
     });
-    function showDate() {
-        $('#range-group').toggleClass('hide-input');
-        $('#date-group').toggleClass('hide-input');
-        $('#half-day').toggleClass('hide-input');
-    }
+    // function showDate() {
+    //     $('#range-group').toggleClass('hide-input');
+    //     $('#date-group').toggleClass('hide-input');
+    //     $('#half-day').toggleClass('hide-input');
+    // }
 </script>
 @endsection

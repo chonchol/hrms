@@ -112,6 +112,7 @@
                                         <th>Entry Location</th>
                                         <th>Exit Time</th>
                                         <th>Exit Location</th>
+                                        <th>Working Hours</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -119,11 +120,18 @@
                                 @foreach($attendances as $index => $attendance)
                                     <tr>
                                         @if ($attendance->registered == 'yes')
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td>{{ $attendance->created_at->format('H:i:s') }}</td>
+                                        <?php
+                                            $timediffence = strtotime($attendance->exit_time)-strtotime($attendance->entry_time);
+                                            $hours = (int)($timediffence/60/60);
+                                            $minutes = (int)($timediffence/60)-$hours*60;
+                                            $seconds = (int)$timediffence-$hours*60*60-$minutes*60;
+                                        ?>
+                                        <td>{{ date('d-m-Y', strtotime($attendance->entry_time)) }}</td>
+                                        <td>{{ date('H:i:s', strtotime($attendance->entry_time)) }}</td>
                                         <td>{{ $attendance->entry_location }}</td>
-                                        <td>{{ $attendance->updated_at->format('H:i:s') }}</td>
+                                        <td>{{ date('H:i:s', strtotime($attendance->exit_time)) }}</td>
                                         <td>{{ $attendance->exit_location }}</td>
+                                        <td><?php echo $hours. ":" .$minutes. ":" .$seconds; ?></td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-success">Present</span> </h5></td>
                                         @elseif($attendance->registered == 'no')
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
@@ -131,32 +139,37 @@
                                         <td class="text-center">No records</td>
                                         <td class="text-center">No records</td>
                                         <td class="text-center">No records</td>
+                                        <td class="text-center">No records</td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-danger">Absent</span> </h5></td>
-                                        @elseif($attendance->registered == 'sun')
+                                        @elseif($attendance->registered == 'fri')
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
                                         <td class="text-center">No records</td>
                                         <td class="text-center">No records</td>
                                         <td class="text-center">No records</td>
                                         <td class="text-center">No records</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-info">Sunday</span> </h5></td>
+                                        <td class="text-center">No records</td>
+                                        <td><h5 class="text-center"><span class="badge badge-pill badge-info">Friday</span> </h5></td>
                                         @elseif($attendance->registered == 'leave')
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
+                                        <td class="text-center">On Leave</td>
+                                        <td class="text-center">On Leave</td>
+                                        <td class="text-center">On Leave</td>
+                                        <td class="text-center">On Leave</td>
+                                        <td class="text-center">On Leave</td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-info">Leave</span> </h5></td>
                                         @elseif($attendance->registered == 'holiday')
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
+                                        <td class="text-center">Public Holiday</td>
+                                        <td class="text-center">Public Holiday</td>
+                                        <td class="text-center">Public Holiday</td>
+                                        <td class="text-center">Public Holiday</td>
+                                        <td class="text-center">Public Holiday</td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-success">Holiday</span> </h5></td>
                                         @else
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
                                         <td>{{ $attendance->created_at->format('H:i:s') }}</td>
                                         <td>{{ $attendance->entry_location }}</td>
+                                        <td>No entry</td>
                                         <td>No entry</td>
                                         <td>No entry</td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-warning">Half Day</span> </h5></td>
@@ -190,6 +203,10 @@
         $('#dataTable').DataTable({
             responsive:true,
             autoWidth: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'print'
+            ]
         });
         $('#date_range').daterangepicker({
             "maxDate": new Date(),
@@ -199,4 +216,10 @@
         })
     });
 </script>
+
+<script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.print.min.js') }}"></script>
+
 @endsection

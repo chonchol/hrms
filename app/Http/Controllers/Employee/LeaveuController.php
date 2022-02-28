@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LeaveMail;
 
 class LeaveuController extends Controller
 {
@@ -23,7 +25,8 @@ class LeaveuController extends Controller
     public function create() {
         $employee = Auth::user()->employee;
         $data = [
-            'employee' => $employee
+            'employee' => $employee,
+            'leave_type' => ['Annual Leave', 'Casual Leave', 'Maternity Leave', 'Paternity Leave', 'Sick Leave', 'Leave without Pay']
         ];
 
         return view('employee.leaves.create')->with($data);
@@ -33,33 +36,51 @@ class LeaveuController extends Controller
         $data = [
             'employee' => Auth::user()->employee
         ];
-        if($request->input('multiple-days') == 'yes') {
+
+        // dd($data);
+        // if($request->input('multiple-days') == 'yes') {
             $this->validate($request, [
-                'reason' => 'required',
+                'leave_type' => 'required',
                 'description' => 'required',
-                'date_range' => new DateRange
+                // 'date_range' => new DateRange
             ]);
-        } else {
-            $this->validate($request, [
-                'reason' => 'required',
-                'description' => 'required'
-            ]);
-        }
+        // } else {
+        //     $this->validate($request, [
+        //         'leave_type' => 'required',
+        //         'description' => 'required'
+        //     ]);
+        // }
         
         $values = [
             'employee_id' => $employee_id,
-            'reason' => $request->input('reason'),
+            'leave_type' => $request->input('leave_type'),
             'description' => $request->input('description'),
-            'half_day' => $request->input('half-day')
+            // 'half_day' => $request->input('half-day')
         ];
-        if($request->input('multiple-days') == 'yes') {
+        // if($request->input('multiple-days') == 'yes') {
             [$start, $end] = explode(' - ', $request->input('date_range'));
             $values['start_date'] = Carbon::parse($start);
             $values['end_date'] = Carbon::parse($end);
-        } else {
-            $values['start_date'] = Carbon::parse($request->input('date'));
-        }
+        // } else {
+        //     $values['start_date'] = Carbon::parse($request->input('date'));
+        // }
         Leave::create($values);
+
+        // dd($values['employee_id']);
+
+        // Mail::to('chonchol57@gmail.com')->send(new LeaveMail($data, $values));
+
+        // \Mail::send('contactMail', array(
+        //     'employee_id' => $input['name'],
+        //     'email' => $input['email'],
+        //     'phone' => $input['phone'],
+        //     'subject' => $input['subject'],
+        //     'message' => $input['message'],
+        // ), function($message) use ($request){
+        //     $message->from($request->email);
+        //     $message->to('admin@admin.com', 'Admin')->subject($request->get('subject'));
+        // });
+
         $request->session()->flash('success', 'Your Leave has been successfully applied, wait for approval.');
         return redirect()->route('employee.leaves.create')->with($data);
     }
@@ -75,18 +96,18 @@ class LeaveuController extends Controller
         Gate::authorize('employee-leaves-access', $leave);
         if($request->input('multiple-days') == 'yes') {
             $this->validate($request, [
-                'reason' => 'required',
+                'leave_type' => 'required',
                 'description' => 'required',
                 'date_range' => new DateRange
             ]);
         } else {
             $this->validate($request, [
-                'reason' => 'required',
+                'leave_type' => 'required',
                 'description' => 'required'
             ]);
         }
 
-        $leave->reason = $request->reason;
+        $leave->leave_type = $request->leave_type;
         $leave->description = $request->description;
         $leave->half_day = $request->input('half-day');
         if($request->input('multiple-days') == 'yes') {

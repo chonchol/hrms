@@ -56,7 +56,7 @@
                                         <th>Status</th>
                                         <th class="none">Department</th>
                                         <th class="none">Description</th>
-                                        <td>Actions</td>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,11 +85,7 @@
                                         <td>{{ $expense->employee->department }}</td>
                                         <td>{{ $expense->description }}</td>
                                         <td>
-                                            <button 
-                                            class="btn btn-xs btn-info"
-                                            data-toggle="modal"
-                                            data-target="#deleteModalCenter{{ $index + 1 }}"
-                                            >
+                                            <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#deleteModalCenter{{ $index + 1 }}">
                                             Change Status
                                             </button>
                                         </td>
@@ -165,11 +161,19 @@ $(document).ready(function(){
             { responsivePriority: 1, targets: 0 },
             { responsivePriority: 2, targets: 1 },
             { responsivePriority: 200000000000, targets: -1 }
-        ]
+        ],
+        dom: 'Bfrtip',
+            buttons: [
+                'excel', 'print'
+            ]
     });
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'hover'
     });
 });
 </script>
+<script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.print.min.js') }}"></script>
 @endsection

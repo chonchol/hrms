@@ -41,9 +41,13 @@
                         @include('messages.alerts')
                         <div class="row mb-3">
                             <div class="col text-center mx-auto">
-                                <img src="/storage/employee_photos/{{ $employee->photo }}" class="rounded-circle img-fluid" alt=""
+                            @if (Auth::user()->employee)
+                                <img src="{{ asset('/img')}}/{{ Auth::user()->employee->photo }}" class="rounded-circle img-fluid" alt=""
                                 style="box-shadow: 2px 4px rgba(0,0,0,0.1)"
                                 >
+                            @else
+                                <img src="{{ asset('/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image"/>
+                            @endif
                             </div>
                         </div>
                         <table class="table profile-table table-hover">

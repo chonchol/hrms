@@ -119,36 +119,6 @@
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="">Mobile Number<span style="color:red">*</span></label>
-                                        <input type="number" name="mobile_no" id="mobile_no" class="form-control" value="{{ old('mobile_no') }}">
-                                        @error('mobile_no')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="">Bank Acc No.</label>
-                                        <input type="number" name="bank_acc_no" id="bank_acc_no" class="form-control" value="{{ old('bank_acc_no') }}">
-                                        @error('bank_acc_no')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="">Bank Branch Name</label>
-                                        <input type="text" name="bank_br_no" id="bank_br_no" class="form-control" value="{{ old('bank_br_no') }}">
-                                        @error('bank_br_no')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="">Branch<span style="color:red">*</span></label>
                                         <select name="branch_name" class="form-control">
@@ -268,6 +238,68 @@
                                         <label for="">National ID<span style="color:red">*</span></label>
                                         <input type="number" name="nid" class="form-control">
                                         @error('nid')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="">Mobile Number<span style="color:red">*</span></label>
+                                        <input type="number" name="mobile_no" id="mobile_no" class="form-control" value="{{ old('mobile_no') }}">
+                                        @error('mobile_no')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Resigned Date<span style="color:red">*</span></label>
+                                        <input type="text" name="resigned_date" id="resigned_date" class="form-control">
+                                        @error('resigned_date')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Status<span style="color:red">*</span></label>
+                                        <select name="status" class="form-control">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                        @error('status')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-row bank-details">
+                                    <div class="form-group col-md-4">
+                                        <label for="">Bank Name<span style="color:red">*</span></label>
+                                        <input type="text" name="bank_name" id="bank_name" class="form-control" value="{{ old('bank_name') }}">
+                                        @error('bank_name')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Bank Acc No.</label>
+                                        <input type="number" name="bank_acc_no" id="bank_acc_no" class="form-control" value="{{ old('bank_acc_no') }}">
+                                        @error('bank_acc_no')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="">Bank Branch Name</label>
+                                        <input type="text" name="bank_br_no" id="bank_br_no" class="form-control" value="{{ old('bank_br_no') }}">
+                                        @error('bank_br_no')
                                             <div class="text-danger">
                                                 {{ $message }}
                                             </div>

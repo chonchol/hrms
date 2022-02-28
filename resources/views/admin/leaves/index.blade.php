@@ -52,14 +52,14 @@
                                         <th>Applied on</th>
                                         <th>Name</th>
                                         <th>Designation</th>
-                                        <th>Reason</th>
+                                        <th>Leave Type</th>
                                         <th>Status</th>
                                         <th class="none">Department</th>
                                         <th class="none">Half Day</th>
                                         <th class="none">Start Date</th>
                                         <th class="none">End Date</th>
                                         <th class="none">Description</th>
-                                        <td>Actions</td>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,7 +69,7 @@
                                         <td>{{ $leave->created_at->format('d-m-Y') }}</td>
                                         <td>{{ $leave->employee->first_name.' '.$leave->employee->last_name }}</td>
                                         <td>{{ $leave->employee->desg }}</td>
-                                        <td>{{ $leave->reason }}</td>
+                                        <td>{{ $leave->leave_type }}</td>
                                         <td>
                                             <h5>
                                                 <span 
@@ -175,11 +175,19 @@ $(document).ready(function(){
             { responsivePriority: 1, targets: 0 },
             { responsivePriority: 2, targets: 1 },
             { responsivePriority: 200000000000, targets: -1 }
-        ]
+        ],
+        dom: 'Bfrtip',
+            buttons: [
+                'excel', 'print'
+            ]
     });
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'hover'
     });
 });
 </script>
+<script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/js/buttons.print.min.js') }}"></script>
 @endsection

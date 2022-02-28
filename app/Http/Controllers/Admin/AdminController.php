@@ -15,8 +15,9 @@ class AdminController extends Controller
         $total_employee = DB::table('employees')->count();
         $leave_pending = DB::table('leaves')->where('status', '=', 'pending')->count();
         $todays_attendee = DB::table('attendances')->whereDate('created_at', '=', date('Y-m-d'))->count();
+        $active_project = DB::table('projects')->count();
         // dd($todays_attendee);
-        return view('admin.index', compact('total_employee', 'leave_pending', 'todays_attendee'));
+        return view('admin.index', compact('total_employee', 'leave_pending', 'todays_attendee', 'active_project'));
     }
 
     public function reset_password() {
