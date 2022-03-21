@@ -74,7 +74,7 @@
                             </tr>
                             <tr>
                                 <td>Designation</td>
-                                <td>{{ $employee->desg }}</td>
+                                <td>{{ $employee->designation->name }}</td>
                             </tr>
                             <tr>
                                 <td>Department</td>

@@ -23,6 +23,16 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function validateLogin(Request $request)
+        {
+        $this->validate($request, [
+            $this->username() => 'exists:users,' . $this->username() . ',status,1',
+            'password' => 'required|string',
+        ], [
+            $this->username() . '.exists' => 'The selected email is invalid or the account has been disabled.'
+        ]);
+    }
+
     /**
      * Where to redirect users after login.
      *

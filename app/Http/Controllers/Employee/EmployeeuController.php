@@ -52,31 +52,43 @@ class EmployeeuController extends Controller
         $employee->join_date = $request->join_date;
         $employee->desg = $request->desg;
         $employee->department_id = $request->department_id;
+        // if ($request->hasFile('photo')) {
+        //     // Deleting the old image
+        //     if ($employee->photo != 'user.png') {
+        //         $old_filepath = public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR. $employee->photo);
+        //         if(file_exists($old_filepath)) {
+        //             unlink($old_filepath);
+        //         }    
+        //     }
+        //     $filename_ext = $request->file('photo')->getClientOriginalName();
+        //     $filename = pathinfo($filename_ext, PATHINFO_FILENAME);
+        //     $ext = $request->file('photo')->getClientOriginalExtension();
+        //     $filename_store = $filename.'_'.time().'.'.$ext;
+        //     $image = $request->file('photo');
+        //     $image_resize = Image::make($image->getRealPath());              
+        //     $image_resize->resize(300, 300);
+        //     $image_resize->save(public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR.$filename_store));
+        //     $employee->photo = $filename_store;
+            
+        // }
+
         if ($request->hasFile('photo')) {
+
             // Deleting the old image
             if ($employee->photo != 'user.png') {
-                $old_filepath = public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR. $employee->photo);
+                $old_filepath = public_path('/img'. $employee->photo);
                 if(file_exists($old_filepath)) {
                     unlink($old_filepath);
                 }    
             }
-            // GET FILENAME
-            $filename_ext = $request->file('photo')->getClientOriginalName();
-            // GET FILENAME WITHOUT EXTENSION
-            $filename = pathinfo($filename_ext, PATHINFO_FILENAME);
-            // GET EXTENSION
-            $ext = $request->file('photo')->getClientOriginalExtension();
-            //FILNAME TO STORE
-            $filename_store = $filename.'_'.time().'.'.$ext;
-            // UPLOAD IMAGE
-            // $path = $request->file('photo')->storeAs('public'.DIRECTORY_SEPARATOR.'employee_photos', $filename_store);
-            // add new file name
+
             $image = $request->file('photo');
-            $image_resize = Image::make($image->getRealPath());              
-            $image_resize->resize(300, 300);
-            $image_resize->save(public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR.$filename_store));
-            $employee->photo = $filename_store;
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/img');
+            $image->move($destinationPath, $name);
+            $employee->photo = $name;
         }
+
         $employee->save();
         $request->session()->flash('success', 'Your profile has been successfully updated!');
         return redirect()->route('employee.profile');

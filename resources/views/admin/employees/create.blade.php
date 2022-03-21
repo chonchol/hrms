@@ -101,27 +101,15 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="join_date">Join Date<span style="color:red">*</span></label>
+                                        <label for="join_date">Joining Date<span style="color:red">*</span></label>
                                         <input type="text" name="join_date" id="join_date" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="">Permanent Address<span style="color:red">*</span></label>
-                                        <textarea name="permanent_add" id="permanent_add" cols="30" rows="3" class="form-control">{{ old('permanent_add') }}</textarea>
-                                        @error('permanent_add')
-                                            <div class="text-danger">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="">Branch<span style="color:red">*</span></label>
-                                        <select name="branch_name" class="form-control">
+                                        <select name="branch_id" class="form-control">
                                             <option hidden disabled selected value> -- select an option -- </option>
                                             @foreach ($branches as $branch)
                                                 <option value="{{ $branch->id }}"
@@ -141,7 +129,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="">Project Name</label>
-                                        <select name="project_name" class="form-control">
+                                        <select name="project_id" class="form-control">
                                             <option hidden disabled selected value> -- select an option -- </option>
                                             @foreach ($projects as $project)
                                                 <option value="{{ $project->id }}"
@@ -215,7 +203,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="">HAEFA ID No</label>
+                                        <label for="">HAEFA ID No<span style="color:red">*</span></label>
                                         <input type="number" name="haefaid" value="{{ old('haefaid') }}" class="form-control">
                                         @error('haefaid')
                                             <div class="text-danger">
@@ -235,7 +223,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="">National ID<span style="color:red">*</span></label>
+                                        <label for="">National ID</label>
                                         <input type="number" name="nid" class="form-control">
                                         @error('nid')
                                             <div class="text-danger">
@@ -244,6 +232,19 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="">Permanent Address<span style="color:red">*</span></label>
+                                        <textarea name="permanent_add" id="permanent_add" cols="30" rows="3" class="form-control">{{ old('permanent_add') }}</textarea>
+                                        @error('permanent_add')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="">Mobile Number<span style="color:red">*</span></label>
@@ -255,7 +256,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="">Resigned Date<span style="color:red">*</span></label>
+                                        <label for="">Resigned Date(if needed)</label>
                                         <input type="text" name="resigned_date" id="resigned_date" class="form-control">
                                         @error('resigned_date')
                                             <div class="text-danger">
@@ -277,9 +278,10 @@
                                     </div>
                                 </div>
 
+                                <h5 style="font-weight: bold;">Bank Details(If any)</h5>
                                 <div class="form-row bank-details">
-                                    <div class="form-group col-md-4">
-                                        <label for="">Bank Name<span style="color:red">*</span></label>
+                                    <div class="form-group col-md-3">
+                                        <label for="">Bank Name</label>
                                         <input type="text" name="bank_name" id="bank_name" class="form-control" value="{{ old('bank_name') }}">
                                         @error('bank_name')
                                             <div class="text-danger">
@@ -287,7 +289,16 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
+                                        <label for="">Account Name</label>
+                                        <input type="text" name="bank_ac_name" id="bank_ac_name" class="form-control" value="{{ old('bank_ac_name') }}">
+                                        @error('bank_ac_name')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label for="">Bank Acc No.</label>
                                         <input type="number" name="bank_acc_no" id="bank_acc_no" class="form-control" value="{{ old('bank_acc_no') }}">
                                         @error('bank_acc_no')
@@ -296,10 +307,10 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label for="">Bank Branch Name</label>
-                                        <input type="text" name="bank_br_no" id="bank_br_no" class="form-control" value="{{ old('bank_br_no') }}">
-                                        @error('bank_br_no')
+                                        <input type="text" name="bank_br_name" id="bank_br_name" class="form-control" value="{{ old('bank_br_no') }}">
+                                        @error('bank_br_name')
                                             <div class="text-danger">
                                                 {{ $message }}
                                             </div>

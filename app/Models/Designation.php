@@ -9,4 +9,8 @@ class Designation extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+
+    public function employee() {
+        return $this->hasMany('App\Employee');
+    }
 }

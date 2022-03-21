@@ -91,7 +91,7 @@
                                                     selected
                                                 @endif
                                                 >
-                                                    {{ $employee->desg }}
+                                                    {{ $designation->name }}
                                                 </option>
                                             @endforeach
                                         </select>

@@ -10,7 +10,7 @@ use App\Models\Branch;
 use App\Models\Project;
 use App\Http\Controllers\Controller;
 use App\Role;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +24,7 @@ class EmployeeController extends Controller
         $data = [
             'employees' => Employee::all()
         ];
+        //dd($data);
         return view('admin.employees.index')->with($data);
     }
     public function create() {
@@ -60,15 +61,25 @@ class EmployeeController extends Controller
             'user_id' => $user->id, 
             'first_name' => $request->first_name, 
             'last_name' => $request->last_name,
-            'sex' => $request->sex, 
-            'dob' => $request->dob, 
-            'join_date' => $request->join_date,
-            'desg' => $request->desg, 
-            'department_id' => $request->department_id, 
-            'salary' => $request->salary, 
-            'photo'  => 'user.png',
             'haefaid'  => $request->haefaid,
             'nid'  => $request->nid,
+            'dob' => $request->dob,
+            'sex' => $request->sex, 
+            'desg' => $request->desg, 
+            'department_id' => $request->department_id, 
+            'branch_id' => $request->branch_id, 
+            'project_id' => $request->project_id,
+            'join_date' => $request->join_date,
+            'permanent_add' => $request->permanent_add,
+            'mobile_no' => $request->mobile_no,
+            'salary' => $request->salary, 
+            'status' => $request->status,
+            'resigned_date' => $request->resigned_date, 
+            'bank_name' => $request->bank_name, 
+            'bank_ac_name' => $request->bank_ac_name, 
+            'bank_acc_no' => $request->bank_acc_no, 
+            'bank_br_name' => $request->bank_br_name,
+            'photo'  => 'user.png',
         ];
 
         if ($request->hasFile('photo')) {
@@ -102,6 +113,8 @@ class EmployeeController extends Controller
         // foreach($employees as $employee){
         //     dd($employee->attendanceToday->updated_at - $employee->attendanceToday->created_at);
         // }
+
+        // dd($employees);
 
       
         return view('admin.employees.attendance')->with($data);
